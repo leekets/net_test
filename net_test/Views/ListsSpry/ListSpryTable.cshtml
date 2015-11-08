@@ -1,0 +1,60 @@
+﻿@model IEnumerable<net_test.Models.List>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="table">
+    <tr>
+        <th>ID</th>
+        <th>
+            @Html.DisplayNameFor(model => model.categoryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.subTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hint)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ID</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.categoryID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hint)
+            </td>
+        </tr>
+    }
+
+</table>

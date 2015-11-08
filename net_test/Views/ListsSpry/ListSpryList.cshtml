@@ -1,0 +1,119 @@
+﻿@model IEnumerable<net_test.Models.List>
+@{
+    ViewBag.Title = "ListSpryList";
+}
+
+<h2></h2>
+<div class="row">
+    <?php
+    $pid=$_GET['pid'];
+    $cid=$_GET['cid'];
+    ?>
+    <div class="col-xs-3">
+        @Html.Partial("_leftNav")
+    </div>
+    <div class="col-xs-9">
+        <div>
+            <form action="http://localhost/git_test073/index.php/pro/moveNews" method="post" role="form">
+                    <table class="table table-bordered table-condensed table-hover">
+                        <tr>
+                            <th></th>
+                            <th>Question(Subject)</th>
+                            <th>Answer(Subtitle)</th>
+                            <th>@Html.DisplayNameFor(model => model.hint)</th>
+                            <th>Action</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td><input type="checkbox" name="arr[]" value="@item.ID" /></td>
+                            <td>@Html.ActionLink(item.subject, "edit", new { id = item.ID })</td>
+                            <td>@Html.ActionLink(item.subTitle, "edit", new { id = item.ID })</td>
+                            <td>@Html.ActionLink(item.hint, "edit", new { id = item.ID })</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                            </td>
+                        </tr>
+                        }
+                    </table>
+                <div class="form-inline mbl">
+                    <script type="text/javascript">
+				var dsCateByPID = new Spry.Data.HTMLDataSet("data_category.php?pid=<?php echo $_GET['pid']; ?>", "category_news");
+                    </script>
+                    <div class="form-group" spry:region="dsCateByPID">
+                        <select spry:repeatchildren="dsCateByPID" class="form-control" name="moveCID">
+                            <option spry:if="'{dsCateByPID::ID}'=='<?php echo $_GET['cid'] ?>'" value="{dsCateByPID::ID}" selected>{dsCateByPID::category}</option>
+                            <option spry:if="'{dsCateByPID::ID}'!='<?php echo $_GET['cid'] ?>'" value="{dsCateByPID::ID}">{dsCateByPID::category}</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="pid" value="<?= $_GET['pid']?>" />
+                    <input type="hidden" name="cid" value="<?= $_GET['cid']?>" />
+                    <input type="hidden" name="act" value="moveNews" />
+                    <input type="submit" value="Move" class="btn btn-default" />
+                </div>
+                <ul class="list-inline">
+                    <li> <a href="http://localhost/git_test073/index.php/printpage/output?page=category" target="_blank" class="btn btn-warning">Print</a></li>
+                    <li><a href="http://localhost/output/test/test_practice.html?id=<?php echo $_GET['cid']?>" target="_blank" class="btn btn-info">Test</a></li>
+                    <li><a href="http://localhost/git_test073/index.php/pro2/cate_sql/?id=<?php echo $pid ?>&act=list" target="_blank" class="btn btn-warning">Git Test</a></li>
+                    <li><a class="btn btn-danger" href="http://localhost/git_test073/index.php/pro/news_sql?id={ds1::ID}&act=delNewsByCate&cid=<?php echo $_GET['cid'] ?>&pid=<?php echo $_GET['pid'] ?>" onclick="return confirm('Delete?')">Delete All</a></li>
+                    <li>@Html.ActionLink("Create New", "Create", new { id = ViewBag.viewID }, new { @class = "btn btn-info" })</li>
+                    <li>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Batch Insert
+                        </button>
+                    </li>
+                    <!-- Button trigger modal -->
+                    
+
+                    
+                    <li><a class="btn btn-default" href="cateList.php?pid=<?php echo $pid?>">Back</a></li>
+                </ul>
+            </form>
+            <form method="post" action="form_newsInsert.php?cid=<?php echo $_GET['cid']?>&pid=<?php echo $_GET['pid']?>" name="formNewsInsert">
+                <table class="table table-condensed">
+                    <tr>
+                        <td></td>
+                        <td><input class="form-control" type="text" name="subject" /></td>
+                        <td><input class="form-control" type="text" name="subTitle" /></td>
+                        <td>
+                            <input type="submit" value="Insert" class="btn btn-default" />
+                            <input type="hidden" name="categoryId" value="<?php echo $_GET['cid']?>" />
+                            <input type="hidden" name="pid" value="<?php echo $_GET['pid']?>" />
+                            <input type="hidden" name="MM_insert" value="formNewsInsert" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <?php require_once('inc_importQuestion.php'); ?>
+        <?php require_once('inc_cateList2.php'); ?>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Html.BeginForm("ListSpryBatchInsert", "ListsSpry"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Batch Insert</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea class="form-control max-width-clear" rows="10" name="textarea"></textarea>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="id" value="@ViewBag.viewID" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+

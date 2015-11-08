@@ -1,0 +1,36 @@
+﻿@model IEnumerable<net_test.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<table class="table" id="table">
+    <tr>
+        <th>ID</th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.parentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sortNum)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ID</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.parentID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sortNum)
+            </td>
+        </tr>
+    }
+</table>

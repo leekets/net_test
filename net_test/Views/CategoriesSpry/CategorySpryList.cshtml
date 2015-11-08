@@ -1,0 +1,71 @@
+﻿@model IEnumerable<net_test.Models.Category>
+@{
+    ViewBag.Title = "Index";
+}
+<h2></h2>
+<div class="row">
+    <div class="col-xs-3">
+        @Html.Partial("_leftNav")
+    </div>
+    <div class="col-xs-9">
+        <form action="" method="post" class="form-inline mtl" role="form">
+            <table class="table table-bordered table-condensed table-hover">
+                <tr>
+                    <th></th>
+                    <th spry:sort="ID" class="none">ID</th>
+                    <th spry:sort="sortNum" class="none">Sort</th>
+                    <th spry:sort="title">Category</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" name="arr[]" value="@item.ID"></td>
+                        <td class="none">@item.ID&nbsp;<span class="glyphicon  glyphicon-hand-left bg-primary badge" spry:if="'@item.ID' == '0'">&nbsp;</span></td>
+                        <td class="none">@item.sortNum</td>
+                        <td>
+                            <ul class="list-inline mbn">
+                                @if (ViewBag.viewID == 0)
+                                {
+                                    <li><a href="@Url.Action("CategorySpryList", "CategoriesSpry", new { id = item.ID })">@item.title</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("ListSpryList", "ListsSpry", new { id = item.ID })">@item.title</a></li>
+                                }
+
+                            </ul>
+
+                        </td>
+                        <td>
+                            <ul class="list-inline mbn">
+                                <li>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </table>
+            @Html.ActionLink("Create New", "Create", new { id = ViewBag.viewID }, new { @class="btn btn-primary"})
+            @if (ViewBag.viewParentID != null)
+            {
+                @Html.ActionLink("Back", "CategorySpryList", new { id = ViewBag.viewParentID }, new { @class = "btn btn-info" })
+            }
+            <a href="http://localhost/git_test073/index.php/pro2/sort?id=2631" target="_blank" class="btn-primary btn">Sort</a>
+            <div class="form-group" spry:region="dsNavLeft">
+                <select spry:repeatchildren="dsNavLeft" class="form-control" name="pid">
+                    <option spry:if="'{ID}'=='@ViewBag.viewID'" value="{dsNavLeft::ID}" selected>{dsNavLeft::title}</option>
+                    <option spry:if="'{ID}'!='@ViewBag.viewID'" value="{dsNavLeft::ID}">{dsNavLeft::title}</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+            <input type="hidden" name="id" value="@ViewBag.viewID" />
+            <input type="hidden" name="act" value="copy" />
+        </form>
+
+    </div>
+</div>
