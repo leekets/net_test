@@ -15,12 +15,39 @@ namespace net_test.Controllers
         private TestDbContext db = new TestDbContext();
 
         // GET: CategoriesSpry
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            return View(db.Category.ToList());
+            return RedirectToAction("CategorySpryList", new { id = id.GetValueOrDefault(0) });
         }
 
-        // GET: CategoriesSpry/Details/5
+        public ActionResult CategorySpryJson()
+        {
+            return Json(db.Category.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CategorySpryTable(int? id)
+        {
+
+            int getID = id.GetValueOrDefault(0);
+
+            return View(db.Category.Where(x => x.parentID == getID).ToList());
+        }
+
+        public ActionResult CategorySpryList(int? id)
+        {
+            int getID = id.GetValueOrDefault(0);
+            if (getID != 0)
+            {
+                Category category = db.Category.Find(id);
+                ViewBag.viewTitle = category.title;
+                ViewBag.viewParentID = category.parentID;
+                ViewBag.viewSortNum = category.sortNum;
+
+            }
+            ViewBag.viewID = getID;
+            return View(db.Category.Where(x => x.parentID == getID).ToList());
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,30 +62,29 @@ namespace net_test.Controllers
             return View(category);
         }
 
-        // GET: CategoriesSpry/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            return View();
+            ViewBag.viewID = id;
+            Category category = new Category();
+            category.parentID = id;
+            category.sortNum = db.Category.Where(x => x.parentID == id).Count() + 1;
+            return View(category);
         }
 
-        // POST: CategoriesSpry/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,title,parentID,sortNum")] Category category)
+        public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
             {
                 db.Category.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("CategorySpryList", new { id = category.parentID });
             }
 
             return View(category);
         }
 
-        // GET: CategoriesSpry/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,9 +99,6 @@ namespace net_test.Controllers
             return View(category);
         }
 
-        // POST: CategoriesSpry/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,title,parentID,sortNum")] Category category)
@@ -89,7 +112,6 @@ namespace net_test.Controllers
             return View(category);
         }
 
-        // GET: CategoriesSpry/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +126,6 @@ namespace net_test.Controllers
             return View(category);
         }
 
-        // POST: CategoriesSpry/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -112,7 +133,7 @@ namespace net_test.Controllers
             Category category = db.Category.Find(id);
             db.Category.Remove(category);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("CategorySpryList", new { id = category.parentID });
         }
 
         protected override void Dispose(bool disposing)

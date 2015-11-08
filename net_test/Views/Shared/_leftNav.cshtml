@@ -1,0 +1,12 @@
+﻿<script type="text/javascript">
+            var dsNavLeft = new Spry.Data.HTMLDataSet("@Url.Action("CategorySpryTable", "CategoriesSpry")", "table", { sortOnLoad: "sortNum", sortOrderOnLoad: "ascending" });
+</script>
+<div class="panel panel-default" spry:region="dsNavLeft">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Left Nav</div>
+
+    <!-- List group -->
+    <ul spry:repeatchildren="dsNavLeft" class="list-group">
+        <li class="list-group-item"><a href="@Url.Action("CategorySpryList", "CategoriesSpry", new { id = "" })/{ID}">{ID}-{title}</a></li>
+    </ul>
+</div>

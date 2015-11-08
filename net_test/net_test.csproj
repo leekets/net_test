@@ -131,6 +131,7 @@
     <Compile Include="Controllers\CategoriesSpryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListsSpryController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -142,6 +143,26 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\oocss.css" />
+    <Content Include="Scripts\SpryAssets\SpryData.js" />
+    <Content Include="Scripts\SpryAssets\SpryHTMLDataSet.js" />
+    <Content Include="Scripts\test\common.js" />
+    <Content Include="Scripts\test\function.js" />
+    <Content Include="Scripts\test\index.js" />
+    <Content Include="Scripts\test\jquery.js" />
+    <Content Include="Scripts\test\jquery.tmpl.min.js" />
+    <Content Include="Scripts\test\jump.js" />
+    <Content Include="Scripts\test\knockout.js" />
+    <Content Include="Scripts\test\ko_jump.js" />
+    <Content Include="Scripts\test\senJSON.js" />
+    <Content Include="Scripts\test\test.js" />
+    <Content Include="Scripts\test\test.txt" />
+    <Content Include="Scripts\test\test_arr.js" />
+    <Content Include="Scripts\test\test_audio.txt" />
+    <Content Include="Scripts\test\test_cn.js" />
+    <Content Include="Scripts\test\test_pactice.js" />
+    <Content Include="Scripts\test\test_select.js" />
+    <Content Include="Scripts\test\test_sen.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -188,6 +209,9 @@
     <Content Include="Views\ListsSpry\ListSpryTable.cshtml" />
     <Content Include="Views\CategoriesSpry\CategorySpryList.cshtml" />
     <Content Include="Views\CategoriesSpry\CategorySpryTable.cshtml" />
+    <Content Include="Views\Shared\_leftNav.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\TestList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

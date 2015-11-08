@@ -15,12 +15,29 @@ namespace net_test.Controllers
         private TestDbContext db = new TestDbContext();
 
         // GET: ListsSpry
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            return View(db.List.ToList());
+            return RedirectToAction("ListSpryList", new { id = id });
         }
 
-        // GET: ListsSpry/Details/5
+        public ActionResult ListSpryTable(int id)
+        {
+            return View(db.List.Where(x => x.categoryID == id).ToList());
+        }
+
+        public ActionResult ListSpryJson()
+        {
+            return Json(db.List.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ListSpryList(int id)
+        {
+            Category category = new Category();
+            ViewBag.viewCID = category.ID;
+            ViewBag.viewID = id;
+            return View(db.List.Where(x => x.categoryID == id).ToList());
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,30 +52,30 @@ namespace net_test.Controllers
             return View(list);
         }
 
-        // GET: ListsSpry/Create
-        public ActionResult Create()
+        //todo: sort
+        public ActionResult Create(int id)
         {
-            return View();
+            ViewBag.viewID = id;
+            List list = new List();
+            list.categoryID = id;
+            list.sort = db.List.Where(x => x.categoryID == id).Count();
+            return View(list);
         }
 
-        // POST: ListsSpry/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,categoryID,subTitle,subject,sen,image,hint,sort")] List list)
+        public ActionResult Create([Bind(Include = "ID,categoryID,subTitle,subject,sen,image,hint")] List list)
         {
             if (ModelState.IsValid)
             {
                 db.List.Add(list);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ListSpryList", new { id = list.categoryID });
             }
 
             return View(list);
         }
 
-        // GET: ListsSpry/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,23 +90,40 @@ namespace net_test.Controllers
             return View(list);
         }
 
-        // POST: ListsSpry/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,categoryID,subTitle,subject,sen,image,hint,sort")] List list)
+        public ActionResult Edit([Bind(Include = "ID,categoryID,subTitle,subject,sen,image,hint")] List list)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(list).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ListSpryList", new { id = list.categoryID });
             }
             return View(list);
         }
 
-        // GET: ListsSpry/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ListSpryBatchInsert(int id, string textArea)
+        {
+            if (textArea != null)
+            {
+                string[] stringSeparators = new string[] { "\r\n" };
+                string[] stringSeparatorsForSingle = new string[] { "$" };
+                string[] lines = textArea.Split(stringSeparators, StringSplitOptions.None);
+                string[] single;
+                for (int count = 0; count <= lines.Length - 1; count++)
+                {
+                    single = lines[count].Split(stringSeparatorsForSingle, StringSplitOptions.None);
+                    db.List.Add(new List() { subject = single[0].Trim(), subTitle = single[1].Trim(), hint = single[2].Trim(), categoryID = id, sort = count });
+                }
+
+                db.SaveChanges();
+            }
+            return RedirectToAction("ListSpryList", new { id = id });
+        }
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +138,6 @@ namespace net_test.Controllers
             return View(list);
         }
 
-        // POST: ListsSpry/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -112,7 +145,7 @@ namespace net_test.Controllers
             List list = db.List.Find(id);
             db.List.Remove(list);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ListSpryList", new { id = list.categoryID });
         }
 
         protected override void Dispose(bool disposing)

@@ -8,8 +8,14 @@ namespace net_test.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            return RedirectToAction("HomeSpryCateList", new { id = id.GetValueOrDefault(0) });
+        }
+
+        public ActionResult HomeSpryCateList(int? id)
+        {
+            ViewBag.viewID = id.GetValueOrDefault(0);
             return View();
         }
 
