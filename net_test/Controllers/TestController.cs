@@ -18,5 +18,10 @@ namespace net_test.Controllers
         {
             return View();
         }
+
+        public ActionResult TestArr()
+        {
+            return View();
+        }
     }
 }

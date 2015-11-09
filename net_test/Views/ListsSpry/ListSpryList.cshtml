@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<net_test.Models.List>
 @{
-    ViewBag.Title = "ListSpryList";
+    ViewBag.Title = "Question List";
 }
 
 <h2></h2>
 <div class="row">
-    <?php
-    $pid=$_GET['pid'];
-    $cid=$_GET['cid'];
-    ?>
     <div class="col-xs-3">
         @Html.Partial("_leftNav")
     </div>
@@ -54,7 +50,7 @@
                 </div>
                 <ul class="list-inline">
                     <li> <a href="http://localhost/git_test073/index.php/printpage/output?page=category" target="_blank" class="btn btn-warning">Print</a></li>
-                    <li><a href="http://localhost/output/test/test_practice.html?id=<?php echo $_GET['cid']?>" target="_blank" class="btn btn-info">Test</a></li>
+                    <li>@Html.ActionLink("Test", "index", "Test", null, new { @class = "btn btn-info" })</li>
                     <li><a href="http://localhost/git_test073/index.php/pro2/cate_sql/?id=<?php echo $pid ?>&act=list" target="_blank" class="btn btn-warning">Git Test</a></li>
                     <li><a class="btn btn-danger" href="http://localhost/git_test073/index.php/pro/news_sql?id={ds1::ID}&act=delNewsByCate&cid=<?php echo $_GET['cid'] ?>&pid=<?php echo $_GET['pid'] ?>" onclick="return confirm('Delete?')">Delete All</a></li>
                     <li>@Html.ActionLink("Create New", "Create", new { id = ViewBag.viewID }, new { @class = "btn btn-info" })</li>
@@ -63,11 +59,7 @@
                             Batch Insert
                         </button>
                     </li>
-                    <!-- Button trigger modal -->
-                    
-
-                    
-                    <li><a class="btn btn-default" href="cateList.php?pid=<?php echo $pid?>">Back</a></li>
+                    <li>@Html.ActionLink("Back", "CategorySpryList", "CategoriesSpry", new { id = ViewBag.viewPID }, new { @class="btn btn-default" })</li>
                 </ul>
             </form>
             <form method="post" action="form_newsInsert.php?cid=<?php echo $_GET['cid']?>&pid=<?php echo $_GET['pid']?>" name="formNewsInsert">
@@ -86,34 +78,8 @@
                 </table>
             </form>
         </div>
-        <?php require_once('inc_importQuestion.php'); ?>
-        <?php require_once('inc_cateList2.php'); ?>
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            @using (Html.BeginForm("ListSpryBatchInsert", "ListsSpry"))
-            {
-                @Html.AntiForgeryToken()
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Batch Insert</h4>
-                </div>
-                <div class="modal-body">
-                    <textarea class="form-control max-width-clear" rows="10" name="textarea"></textarea>
-
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="id" value="@ViewBag.viewID" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-
-            }
-        </div>
-    </div>
-</div>
+@Html.Partial("_modalBatchInsert")
 

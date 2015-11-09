@@ -27,13 +27,14 @@ namespace net_test.Controllers
 
         public ActionResult ListSpryJson()
         {
-            return Json(db.List.ToList(), JsonRequestBehavior.AllowGet);
+            //return Json(db.List.ToList(), JsonRequestBehavior.AllowGet);
+            return View(db.List.ToList());
         }
 
         public ActionResult ListSpryList(int id)
         {
-            Category category = new Category();
-            ViewBag.viewCID = category.ID;
+            Category category = db.Category.Find(id);
+            ViewBag.viewPID = category.parentID;
             ViewBag.viewID = id;
             return View(db.List.Where(x => x.categoryID == id).ToList());
         }

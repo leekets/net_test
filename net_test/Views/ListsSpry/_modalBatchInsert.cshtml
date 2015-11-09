@@ -1,0 +1,25 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Html.BeginForm("ListSpryBatchInsert", "ListsSpry"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Batch Insert</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea class="form-control max-width-none" rows="10" name="textarea"></textarea>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="id" value="@ViewBag.viewID" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

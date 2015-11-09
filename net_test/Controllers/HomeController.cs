@@ -10,7 +10,7 @@ namespace net_test.Controllers
     {
         public ActionResult Index(int? id)
         {
-            return RedirectToAction("HomeSpryCateList", new { id = id.GetValueOrDefault(0) });
+            return RedirectToAction("CategorySpryList", "CategoriesSpry");
         }
 
         public ActionResult HomeSpryCateList(int? id)

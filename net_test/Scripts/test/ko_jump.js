@@ -1,9 +1,10 @@
 pid = getValue("id"); //git id
+$("#btnPart a").addClass("btn btn-block"); // Style btnPart
 
 $(function(){
 	ko.applyBindings({
 		ko_array_url: [
-			{ ko_value: 'Index', ko_href: 'index.html', ko_class:'', ko_type:'', ko_target:''},
+			{ ko_value: 'Index', ko_href: baseurl+'index', ko_class:'', ko_type:'', ko_target:''},
 			{ ko_value: 'Back Category', ko_href: '', ko_class:'f_nav_jump', ko_type:'',  ko_target:''},
 			{ ko_value: 'Paractice Mode', ko_href: 'test_practice.html?id='+pid, ko_class:'', ko_type:'',  ko_target:''},
 			{ ko_value: 'Normal Mode', ko_href: 'test.html?id='+pid, ko_class:'', ko_type:'',  ko_target:''},

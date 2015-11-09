@@ -22,7 +22,8 @@ namespace net_test.Controllers
 
         public ActionResult CategorySpryJson()
         {
-            return Json(db.Category.ToList(), JsonRequestBehavior.AllowGet);
+            return View(db.Category.ToList());
+           // return View(Json(new { test=db.Category.ToList() }, JsonRequestBehavior.AllowGet));
         }
 
         public ActionResult CategorySpryTable(int? id)

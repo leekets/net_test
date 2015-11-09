@@ -212,6 +212,10 @@
     <Content Include="Views\Shared\_leftNav.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\TestList.cshtml" />
+    <Content Include="Views\CategoriesSpry\CategorySpryJson.cshtml" />
+    <Content Include="Views\ListsSpry\ListSpryJson.cshtml" />
+    <Content Include="Views\ListsSpry\_modalBatchInsert.cshtml" />
+    <Content Include="Views\Test\TestArr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

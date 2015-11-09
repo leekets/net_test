@@ -22,3 +22,39 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.max-width-none {
+    max-width: none !important;
+}
+
+.textarea_full, .textarea_full:focus {
+	display: block;
+	width: 99%;
+	font-size: 22px;
+	height: 28px !important;
+	padding: 0px;
+	border: 0px;
+	background-color: transparent;
+	margin: 0px;
+	margin-right: 10px;
+	-webkit-appearance: none;
+	-webkit-text-size-adjust: none;
+	box-shadow: none;
+	overflow: hidden;
+	line-height: 28px;
+}
+
+    .navbar .brand:hover {
+        text-decoration: none;
+    }
+
+    .navbar .brand {
+        float: left;
+        display: block;
+        padding: 16px 10px 12px 30px;
+        margin-left: -20px;
+        font-size: 20px;
+        font-weight: 200;
+        line-height: 1;
+        color: #999999;
+    }

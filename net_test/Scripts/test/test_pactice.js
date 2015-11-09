@@ -14,7 +14,7 @@ var c_mode=0; //0:lrc mode; 1:normal mode
 $(function() {
 	pid = getValue("id"); //git id
     if (pid == undefined) { //if id="" then jump to index
-        window.location = "index.html";
+        //window.location = "index.html";
     }
 	
 	//get Array
@@ -26,7 +26,7 @@ $(function() {
         lenArr = arr.length; iArr < lenArr; iArr++) {
             for (var i = 0,
             len = newsJSON.length; i < len; i++) {
-                if (newsJSON[i].id == arr[iArr]) {
+                if (newsJSON[i].ID == arr[iArr]) {
                     comments.push(newsJSON[i]);
                 }
             }
@@ -34,7 +34,7 @@ $(function() {
     } else {
         for (var i = 0,
         len = newsJSON.length; i < len; i++) {
-            if (newsJSON[i].categoryId == pid) {
+            if (newsJSON[i].categoryID == pid) {
                 comments.push(newsJSON[i]);
             }
         }
@@ -85,11 +85,11 @@ $(function() {
 	x=getValue("id");	//get id
 	a=usual_search(cateJSON,x); //get num
 	c=Number(a)+Number(1);
-	var jumpUrl="";
+	//var jumpUrl="";
 	var jumpPage="test_practice.html";
-	jumpIndex="index.html?pageSize="+(Number(pageSize)+Number(c_next))+"&id="+cateJSON[a].parentId+"&c_audio="+c_audio;
+	jumpIndex="index.html?pageSize="+(Number(pageSize)+Number(c_next))+"&id="+cateJSON[a].parentID+"&c_audio="+c_audio;
 	if(cateJSON[c]!==undefined){
-		if(cateJSON[a].parentId==cateJSON[c].parentId){
+		if(cateJSON[a].parentID==cateJSON[c].parentID){
 			if(c_mode==1){
 				if(pageSize>comments.length){
 					jumpUrl=jumpPage+"?id="+cateJSON[c].ID+"&pageSize=1&c_audio="+c_audio+"&c_mode="+c_mode;
@@ -115,13 +115,7 @@ $(function() {
 	/*自动向下跳转 end*/
     var audioUrl = "";
     
-
-    
-//    $("title").html(cateJSON[usual_search(cateJSON, pid)].category); //change title
-//	$("title").text(".brand"); //change title
 	$("title").text(cateJSON[usual_search(cateJSON, pid)].category); //change title
-//	$(".spTitle").html(cateJSON[usual_search(cateJSON, pid)].category); //change title
-	
 
     var get_c_random = getValue("c_random");
     if ((typeof(get_c_random) != "undefined" && get_c_random != "")) {
@@ -192,15 +186,15 @@ function act() {
 				q_en=q;
 			}
 			btnQ="Submit";
-			if(c_audio==1){
-				s_audio="";
-				//new edit 6/9/2013
-				s_audio=comments[index]['subTitle']+".mp3";
-				$("audio").attr({"src": ""});
-				$("audio").attr({"src": "../audio/"+s_audio});
-				audio=document.getElementById('player') //初始化音频路径
-				//play(0,3);
-			}	
+			//if(c_audio==1){
+			//	s_audio="";
+			//	new edit 6/9/2013
+			//	s_audio=comments[index]['subTitle']+".mp3";
+			//	$("audio").attr({"src": ""});
+			//	$("audio").attr({"src": "../audio/"+s_audio});
+			//	audio=document.getElementById('player') //初始化音频路径
+			//	play(0,3);
+			//}	
 //=================================================================================			
 			var sen=comments[index]['sen'];
 			var subject=comments[index]['subject']; //Question (Chinese)
@@ -215,38 +209,41 @@ function act() {
 //=================================================================================	
 
 //=================================================================================	 BEGIN
-			$(".jsEdit").attr("href","http://localhost/git_test073_helper/newsEdit.php?cid="+comments[index]['categoryId']+"&id="+comments[index]['id']);
+			$(".jsEdit").attr("href", baseurl + "../ListsSpry/Edit/" + comments[index]['ID']);
 			$(".f_img").attr("src",".."+comments[index]['image'])
-			var lenMAX=subTitle.length;
-			var $tex = $("#mainInput");  
+			var lenMAX = subTitle.length;
+			var $tex;
+			var lenNow;
 			$("#btnPart").hide();
-			$('#mainInput').bind('focus keyup input paste',function(){  //采用几个事件来触发（已增加鼠标粘贴事件）
-				var lenNow=$(this).attr("value").length;
-				if(lenNow>lenMAX){
-					$("#lenChange").addClass("label-important");
-					$("#btnPart").hide();
-				}
-				if(lenNow<lenMAX){
-					$("#lenChange").attr("class","label");
-					$("#btnPart").hide();
-				}
-				if(lenNow==lenMAX){
-					if ($("textarea.b").val().replace(/>/g, "&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
-						$("#lenChange").addClass("label-success");
-						$("#btnPart").show();
-						if($("#btnPart a:not(:hidden)").length==1){
-							 $("#btnPart a:not(:hidden)").click();
-						}
-						$("#btnPart").hide();
-					} else {
-						$("#lenChange").addClass("label-warning");
-						$("#btnPart").show();
-					};
-					
-				}
-				$('#lenChange').text(lenNow+","+lenMAX)  //获取评论框字符长度并添加到ID="num"元素上
-			 
-			});	
+			$('#mainInput').bind('focus keyup input paste', function () {  //采用几个事件来触发（已增加鼠标粘贴事件）
+			    $tex = $("#mainInput").val();
+			    if ($tex != null) {
+			        lenNow = $tex.length;
+			        if (lenNow > lenMAX) {
+			            $("#lenChange").addClass("label-danger");
+			            $("#btnPart").hide();
+			        }
+			        if (lenNow < lenMAX) {
+			            $("#lenChange").attr("class", "label label-info");
+			            $("#btnPart").hide();
+			        }
+			        if (lenNow == lenMAX) {
+			            if ($("textarea.b").val().replace(/>/g, "&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
+			                $("#lenChange").addClass("label-success");
+			                $("#btnPart").show();
+			                if ($("#btnPart a:not(:hidden)").length == 1) {
+			                    $("#btnPart a:not(:hidden)").click();
+			                }
+			                $("#btnPart").hide();
+			            } else {
+			                $("#lenChange").addClass("label-warning");
+			                $("#btnPart").show();
+			            };
+			        }
+			    }
+			    $('#lenChange').text(lenNow + "," + lenMAX)  //获取评论框字符长度并添加到ID="num"元素上
+
+			});
 			$("#lenMax").html(lenMAX);
 			
 //=================================================================================	 END		
@@ -288,7 +285,7 @@ function act() {
 				t2=new Date().getTime()-t1;
 				$(".brand").html(MillisecondToDate(t2));
 				window.onbeforeunload = ""; 
-				window.location=jumpUrl;
+				//window.location=jumpUrl;
 				//window.location="index."+bothPage+"#pid"+pid;
 			}
 		}
@@ -327,10 +324,10 @@ function act() {
         $(".sharewith.e .e").html($("textarea.b").val());
         $("textarea.b").val("");
         $("a.btnP").show();
-        if (c_audio == 1) {
-            audio = document.getElementById('player');
-            play(0, c_paly); //错误后重复3次
-        }
+        //if (c_audio == 1) {
+        //    audio = document.getElementById('player');
+        //    play(0, c_paly); //错误后重复3次
+        //}
         $(".e_act3").show(); //显示：act3元素；
         $("a.btn2").hide().delay(dNum).fadeIn();
         $("a.btn3").hide();
@@ -346,16 +343,21 @@ function act() {
 	});
 	
 	//Main part
-	$("a.btn0").click(function() {
+	$("a.btn0").click(function () {
+	    console.log("btn0");
+	    console.log("Input: " + $("textarea.b").val().replace(/>/g, "&gt;").toLowerCase());
+	    console.log("Answer: " + $(".a .a").html().toLowerCase());
         //$(".f_slipt").hide();
-        if ($("textarea.b").val().replace(/>/g, "&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
+	    if ($("textarea.b").val().replace(/>/g, "&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
+            console.log("Right")
 			if(pNum<(c_pNum-1)){
 				pNum += 1;
 				//alert(pNum);
 				$("a.pNum").html("Practice ["+pNum+"/"+c_pNum+"]");
 				$("textarea.b").val("");			//输入框清空
 				$("textarea.b")[0].focus();			//输入框焦点
-			}else{
+			} else {
+			    
 				pNum=0;
 				$("a.pNum").html("Practice");
 				//act();
@@ -365,8 +367,11 @@ function act() {
 				$("textarea.b")[0].focus();			//输入框焦点
 			}
             //act();
-        } else {
-
+	    } else {
+	        pNum = 0;
+	        $("a.pNum").html("Practice [" + pNum + "/" + c_pNum + "]");
+	        $("textarea.b").val("");			//输入框清空
+	        $("textarea.b")[0].focus();			//输入框焦点
         };
     });
     $("a.btn1").click(function() {
@@ -536,7 +541,7 @@ function act() {
         for (i = 0; i <= s_num + 1; i++) {
             $(".f_btnNo" + (i + 1)).html(arrSelect[i].subject); //赋值
             $(".f_btnNo" + (i + 1)).attr("f_a", arrSelect[i].subTitle);
-            $(".f_btnNo" + (i + 1)).attr("f_id", arrSelect[i].id);
+            $(".f_btnNo" + (i + 1)).attr("f_id", arrSelect[i].ID);
             $(".f_btnNo" + (i + 1)).prepend("<span class=\"label label-warning none\">" + arrSelect[i].subTitle + "</span>&nbsp;");
             if (f_chrome == 1) {
                 $(".f_btnNo" + (i + 1)).prepend("<span class='label' style='width:130px !important;'>[" + $(".f_btnNo" + (i + 1)).attr("id") + "]</span>&nbsp;");
@@ -566,7 +571,7 @@ function act() {
         for (i = 0; i <= s_num + 1; i++) {
             $(".f_btnNo" + (i + 1)).html(arrSelect[i].subTitle); //赋值
             $(".f_btnNo" + (i + 1)).attr("f_a", arrSelect[i].subject);
-            $(".f_btnNo" + (i + 1)).attr("f_id", arrSelect[i].id);
+            $(".f_btnNo" + (i + 1)).attr("f_id", arrSelect[i].ID);
             $(".f_btnNo" + (i + 1)).prepend("<span class=\"label label-warning none\">" + arrSelect[i].subject + "</span>&nbsp;");
             if (f_chrome == 1) {
                 $(".f_btnNo" + (i + 1)).prepend("<span class='label' style='width:130px !important;'>[" + $(".f_btnNo" + (i + 1)).attr("id") + "]</span>&nbsp;");
