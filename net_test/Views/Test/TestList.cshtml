@@ -3,14 +3,11 @@
     ViewBag.Title = "TestList";
     string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/";
 }
-<script src="@Url.Action("ListSpryJson", "ListsSpry")" type="text/javascript"></script>
-<script src="@Url.Action("CategorySpryJson", "CategoriesSpry")" type="text/javascript"></script>
-<script src="~/Scripts/test/test_practice.js" type="text/javascript"></script>
-<script src="~/Scripts/test/test.js"></script>
-<script src="~/Scripts/test/common.js" type="text/javascript"></script>
 <script>
     var baseurl = "@baseUrl"+"test/";
 </script>
+@Html.Partial("_testHead")
+<script src="~/Scripts/test/test_practice.js" type="text/javascript"></script>
 <h2></h2>
 @Html.Partial("_nav")
 

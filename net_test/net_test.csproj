@@ -219,6 +219,7 @@
     <Content Include="Views\Test\TestArr.cshtml" />
     <Content Include="Views\Test\_nav.cshtml" />
     <Content Include="Views\ListsSpry\_cateList2.cshtml" />
+    <Content Include="Views\Test\_testHead.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
