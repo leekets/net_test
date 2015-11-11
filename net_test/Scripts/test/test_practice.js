@@ -10,10 +10,11 @@ var c_size=1; //pageSize:0 none, 1 work
 var c_nextSize=1;
 var c_next=1;	//往后跳的数量
 var c_group=0;
-var c_mode=0; //0:lrc mode; 1:normal mode
+var c_mode=1; //0:lrc mode; 1:normal mode
 $(function() {
 	pid = getValue("id"); //git id
-    if (pid == undefined) { //if id="" then jump to index
+	if (pid == undefined) { //if id="" then jump to index
+	    alter("No ID");
         //window.location = "index.html";
     }
 	
@@ -44,28 +45,8 @@ $(function() {
 	if (pageSize == undefined){
 		pageSize=0;
 	}
-	c2_audio= getValue("c_audio");
-	if(c2_audio == undefined || c2_audio == 0){
-		c_audio=0;
-	}else{
-		c_audio=1;
-	}
-	//var c2_mode;
 	c2_mode=getValue("c_mode");
 	//url 选择测试的模式
-	if(c2_mode != undefined){
-		//c_mode=c2_mode;
-	}
-	if(c_mode==1 && pageSize==0){
-		pageSize=1;
-		//window.location=jumpUrl;
-	}
-//	alert(c_mode);
-//	 if($.browser.safari && navigator.userAgent.toLowerCase().match(/chrome/) != null) {
-        c_audio=1;
-//		$( ".container" ).css( "zoom", "250%" );
-//		$( ".container" ).css( "width", "90%" );
-//    }
 	if (c_size==1){
 		testSize=pageSize;
 	}
@@ -74,30 +55,22 @@ $(function() {
 			c_jump=pageSize-5;
 		}
 	}
-	if(c_group==2){
-		if(pageSize>20){
-			c_jump=pageSize-5;
-		}else{
-			c_jump=15;
-		}
-	}
 	/*自动向下跳转*/
 	x=getValue("id");	//get id
 	a=usual_search(cateJSON,x); //get num
 	c=Number(a)+Number(1);
-	//var jumpUrl="";
-	var jumpPage="test_practice.html";
-	jumpIndex="index.html?pageSize="+(Number(pageSize)+Number(c_next))+"&id="+cateJSON[a].parentID+"&c_audio="+c_audio;
+	var jumpPage = baseurl + "TestList";
+	jumpIndex = baseurl + "index?pageSize=" + (Number(pageSize) + Number(c_next)) + "&id=" + cateJSON[a].parentID + "&c_audio=" + c_audio;
 	if(cateJSON[c]!==undefined){
 		if(cateJSON[a].parentID==cateJSON[c].parentID){
-			if(c_mode==1){
-				if(pageSize>comments.length){
-					jumpUrl=jumpPage+"?id="+cateJSON[c].ID+"&pageSize=1&c_audio="+c_audio+"&c_mode="+c_mode;
-				}else{
-				pageSize=Number(pageSize)+Number(c_nextSize);
-				jumpUrl=jumpPage+"?id="+cateJSON[a].ID+"&pageSize="+pageSize+"&c_audio="+c_audio+"&c_mode="+c_mode; //jump to the beginning and pagesize+1
-				}
-			}
+		    if (c_mode == 1) {
+		        if (pageSize > comments.length) {
+		            jumpUrl = jumpPage + "?id=" + cateJSON[c].ID + "&pageSize=1&c_audio=" + c_audio + "&c_mode=" + c_mode;
+		        } else {
+		            pageSize = Number(pageSize) + Number(c_nextSize);
+		            jumpUrl = jumpPage + "?id=" + cateJSON[a].ID + "&pageSize=" + pageSize + "&c_audio=" + c_audio + "&c_mode=" + c_mode; //jump to the beginning and pagesize+1
+		        }
+		    }
 			if(c_mode==0){
 				jumpUrl=jumpPage+"?id="+cateJSON[c].ID+"&pageSize="+pageSize+"&c_audio="+c_audio+"&c_mode="+c_mode; //jump to next question category
 			}
@@ -115,7 +88,7 @@ $(function() {
 	/*自动向下跳转 end*/
     var audioUrl = "";
     
-	$("title").text(cateJSON[usual_search(cateJSON, pid)].category); //change title
+	$("title").text(cateJSON[usual_search(cateJSON, pid)].title); //change title
 
     var get_c_random = getValue("c_random");
     if ((typeof(get_c_random) != "undefined" && get_c_random != "")) {
@@ -284,8 +257,9 @@ function act() {
 				$("textarea.b").val("");
 				t2=new Date().getTime()-t1;
 				$(".brand").html(MillisecondToDate(t2));
-				window.onbeforeunload = ""; 
-				//window.location=jumpUrl;
+				window.onbeforeunload = "";
+				console.log(jumpUrl);
+				window.location=jumpUrl;
 				//window.location="index."+bothPage+"#pid"+pid;
 			}
 		}

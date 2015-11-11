@@ -160,7 +160,8 @@
     <Content Include="Scripts\test\test_arr.js" />
     <Content Include="Scripts\test\test_audio.txt" />
     <Content Include="Scripts\test\test_cn.js" />
-    <Content Include="Scripts\test\test_pactice.js" />
+    <Content Include="Scripts\test\test_common.js" />
+    <Content Include="Scripts\test\test_practice.js" />
     <Content Include="Scripts\test\test_select.js" />
     <Content Include="Scripts\test\test_sen.txt" />
     <Content Include="favicon.ico" />
@@ -216,6 +217,8 @@
     <Content Include="Views\ListsSpry\ListSpryJson.cshtml" />
     <Content Include="Views\ListsSpry\_modalBatchInsert.cshtml" />
     <Content Include="Views\Test\TestArr.cshtml" />
+    <Content Include="Views\Test\_nav.cshtml" />
+    <Content Include="Views\ListsSpry\_cateList2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

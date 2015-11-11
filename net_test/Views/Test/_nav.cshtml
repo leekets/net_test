@@ -1,0 +1,45 @@
+﻿<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="javascript:void(0);" class="brand"> N:<span class="sp1"></span>;T:<span class="sp2"></span>;E:<span class="sp3"></span>; <span class="spTitle"></span></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+            <ul class="nav navbar-nav">
+                <!-- ko foreach: ko_array_url -->
+                <li> <a data-bind="text: ko_value, attr: { href: ko_href, class: ko_class, type: ko_type, target: ko_target }"></a> </li>
+                <!-- /ko -->
+                <li><a class="btnNext" accesskey="n" href="javascript:void(0);">Next</a></li>
+                <li><a class="f_link_normal" href="javescript:void(0);">Normal Mode</a></li>
+                <li> <a class="jsEdit" accesskey="c" target="_blank">Change</a> </li>
+                <li> <a class="btnCn updatebtn f_slipt" onclick="document.getElementById('player').currentTime = 0;document.getElementById('player').play()" href="javascript:void(0);">Play</a> </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div>
+</nav>
+
+<script>
+    pid = getValue("id"); //git id
+
+    $(function () {
+        ko.applyBindings({
+            ko_array_url: [
+                { ko_value: 'Index', ko_href: baseurl + 'index', ko_class: '', ko_type: '', ko_target: '' },
+                { ko_value: 'Back Category', ko_href: '', ko_class: 'f_nav_jump', ko_type: '', ko_target: '' },
+                { ko_value: 'Paractice Mode', ko_href: baseurl + 'TestList?id=' + pid, ko_class: '', ko_type: '', ko_target: '' },
+                { ko_value: 'Normal Mode', ko_href: baseurl + 'TestArr?id=' + pid, ko_class: '', ko_type: '', ko_target: '' },
+                { ko_value: 'Next', ko_href: '', ko_class: 'btnNext', ko_type: '', ko_target: '' },
+            ]
+        });
+        $(".f_nav_jump").attr("href", "index.html?id=" + cateJSON[usual_search(cateJSON, pid)].parentId);
+        $(".f_plus_id").click(function () {
+            window.location = $(this).attr("type") + ".html?id=" + pid;
+        });
+    });
+</script>

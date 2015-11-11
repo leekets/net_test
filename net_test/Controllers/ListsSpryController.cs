@@ -34,6 +34,7 @@ namespace net_test.Controllers
         public ActionResult ListSpryList(int id)
         {
             Category category = db.Category.Find(id);
+            ViewBag.viewTitle = category.title;
             ViewBag.viewPID = category.parentID;
             ViewBag.viewID = id;
             return View(db.List.Where(x => x.categoryID == id).ToList());
@@ -75,6 +76,36 @@ namespace net_test.Controllers
             }
 
             return View(list);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ListBatchAction(string[] arr, int moveCID, int cid, string act)
+        {
+
+            if (act == "moveNews")
+            {
+                foreach (var selection in arr)
+                {
+                    int getID= Int32.Parse(selection);
+                    db.List.Single(x => x.ID == getID).categoryID = moveCID;
+                    db.SaveChanges();
+                }
+
+                //string[] stringSeparators = new string[] { "," };
+                //string[] lines = arr[].Split(stringSeparators, StringSplitOptions.None);
+                //int[] intLine = Array.ConvertAll(lines, s => int.Parse(s));
+                //for (int count = 0; count <= intLine.Length - 1; count++)
+                //{
+                //    var tmp = intLine[count];
+
+                //}
+
+
+                return RedirectToAction("ListSpryList", new { id = moveCID });
+            }
+            return RedirectToAction("ListSpryList", new { id = cid , info="error"});
+
         }
 
         public ActionResult Edit(int? id)
