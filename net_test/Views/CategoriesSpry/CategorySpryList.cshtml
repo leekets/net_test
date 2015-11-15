@@ -54,7 +54,15 @@
             @if (ViewBag.viewParentID != null)
             {
                 @Html.ActionLink("Back", "CategorySpryList", new { id = ViewBag.viewParentID }, new { @class = "btn btn-info" })
-            }
+                <a class="btn btn-default" 
+                   data-toggle="modal"
+                   data-target="#modals_autoTree" data-id="@ViewBag.viewID" data-category="@ViewBag.viewTitle">Auto Tree</a>
+             }
+
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalPrint">
+                Print Categories Num
+            </button>
+
             <a href="http://localhost/git_test073/index.php/pro2/sort?id=2631" target="_blank" class="btn-primary btn">Sort</a>
             <div class="form-group" spry:region="dsNavLeft">
                 <select spry:repeatchildren="dsNavLeft" class="form-control" name="pid">
@@ -69,3 +77,5 @@
 
     </div>
 </div>
+@Html.Partial("_modalAutoTree")
+@Html.Partial("_modelPrintCateNum")

@@ -225,7 +225,7 @@ $(function () {
             //=================================================================================	
 
             //=================================================================================	 BEGIN
-            $(".jsEdit").attr("href", "http://localhost/git_test073_helper/newsEdit.php?cid=" + comments[index]['categoryID'] + "&id=" + comments[index]['id']);
+            $(".jsEdit").attr("href", baseurl + "../ListsSpry/Edit/" + comments[index]['ID']);
             $(".f_img").attr("src", ".." + comments[index]['image'])
             var lenMAX = subTitle.length;
             var $tex = $("#mainInput").val();

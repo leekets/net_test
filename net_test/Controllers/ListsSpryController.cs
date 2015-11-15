@@ -31,6 +31,12 @@ namespace net_test.Controllers
             return View(db.List.ToList());
         }
 
+        public ActionResult ListSpryPrintCateNum(int id, int repeated)
+        {
+            ViewBag.viewRepeated = repeated;
+            return View(db.List.Where(x => x.categoryID == id).ToList());
+        }
+
         public ActionResult ListSpryList(int id)
         {
             Category category = db.Category.Find(id);
@@ -142,15 +148,22 @@ namespace net_test.Controllers
             if (textArea != null)
             {
                 string[] stringSeparators = new string[] { "\r\n" };
-                string[] stringSeparatorsForSingle = new string[] { "$" };
+                string[] stringSeparatorsForSingle = new string[] { "\t" };
                 string[] lines = textArea.Split(stringSeparators, StringSplitOptions.None);
                 string[] single;
                 for (int count = 0; count <= lines.Length - 1; count++)
                 {
                     single = lines[count].Split(stringSeparatorsForSingle, StringSplitOptions.None);
-                    db.List.Add(new List() { subject = single[0].Trim(), subTitle = single[1].Trim(), hint = single[2].Trim(), categoryID = id, sort = count });
+                    if (single.Length == 3)
+                    {
+                        db.List.Add(new List() { subject = single[0].Trim(), subTitle = single[1].Trim(), hint = single[2].Trim(), categoryID = id, sort = count });
+                    }
+                    if (single.Length == 4)
+                    {
+                        int getCID = Int32.Parse(single[3].Trim());
+                        db.List.Add(new List() { subject = single[0].Trim(), subTitle = single[1].Trim(), hint = single[2].Trim(), categoryID = getCID, sort = count });
+                    }
                 }
-
                 db.SaveChanges();
             }
             return RedirectToAction("ListSpryList", new { id = id });

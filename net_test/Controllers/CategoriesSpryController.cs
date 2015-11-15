@@ -43,6 +43,7 @@ namespace net_test.Controllers
                 ViewBag.viewTitle = category.title;
                 ViewBag.viewParentID = category.parentID;
                 ViewBag.viewSortNum = category.sortNum;
+                ViewBag.viewID = id;
 
             }
             ViewBag.viewID = getID;
@@ -84,6 +85,21 @@ namespace net_test.Controllers
             }
 
             return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CategoriesBatchInsert(int id, int num, string act, string category)
+        {
+            if (act == "autoCate")
+            {
+                for (int i = 1; i <= num; i++)
+                {
+                    db.Category.Add(new Category() { title = category + "-" + i, parentID = id });
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("CategorySpryList", "CategoriesSpry", new { id = id });
         }
 
         public ActionResult Edit(int? id)

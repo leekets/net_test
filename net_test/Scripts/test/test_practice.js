@@ -60,30 +60,39 @@ $(function() {
 	a=usual_search(cateJSON,x); //get num
 	c=Number(a)+Number(1);
 	var jumpPage = baseurl + "TestList";
+	var jumpPage2 = baseurl + "TestArr";
 	jumpIndex = baseurl + "index?pageSize=" + (Number(pageSize) + Number(c_next)) + "&id=" + cateJSON[a].parentID + "&c_audio=" + c_audio;
 	if(cateJSON[c]!==undefined){
 		if(cateJSON[a].parentID==cateJSON[c].parentID){
 		    if (c_mode == 1) {
-		        if (pageSize > comments.length) {
-		            jumpUrl = jumpPage + "?id=" + cateJSON[c].ID + "&pageSize=1&c_audio=" + c_audio + "&c_mode=" + c_mode;
+		        if (pageSize > comments.length || pageSize == 0) {
+		            jumpUrl = jumpPage2 + "?id=" + cateJSON[a].ID;
+
+		            //jumpUrl = jumpPage + "?id=" + cateJSON[c].ID + "&pageSize=1&c_audio=" + c_audio + "&c_mode=" + c_mode;
+		            console.log("jumpUrl=1");
 		        } else {
 		            pageSize = Number(pageSize) + Number(c_nextSize);
 		            jumpUrl = jumpPage + "?id=" + cateJSON[a].ID + "&pageSize=" + pageSize + "&c_audio=" + c_audio + "&c_mode=" + c_mode; //jump to the beginning and pagesize+1
+		            console.log("jumpUrl=2");
 		        }
 		    }
 			if(c_mode==0){
-				jumpUrl=jumpPage+"?id="+cateJSON[c].ID+"&pageSize="+pageSize+"&c_audio="+c_audio+"&c_mode="+c_mode; //jump to next question category
+			    jumpUrl = jumpPage + "?id=" + cateJSON[c].ID + "&pageSize=" + pageSize + "&c_audio=" + c_audio + "&c_mode=" + c_mode; //jump to next question category
+			    console.log("jumpUrl=3");
 			}
 		}else{
 			//jumpUrl = "jump.html?id=" + pid;
-			jumpUrl=jumpIndex;
+		    jumpUrl = jumpIndex;
+		    console.log("jumpUrl=4");
 		}
 	}else{
-		jumpUrl=jumpIndex;
+	    jumpUrl = jumpIndex;
+	    console.log("jumpUrl=5");
 	}
 	action=getValue("action");
 	if(action==1){
-		jumpUrl="test.html?id="+x+"&pageSize="+(Number(pageSize)+Number(c_next))+"&c_audio="+c_audio+"&action=1"+"&c_mode="+c_mode;
+	    jumpUrl = "test.html?id=" + x + "&pageSize=" + (Number(pageSize) + Number(c_next)) + "&c_audio=" + c_audio + "&action=1" + "&c_mode=" + c_mode;
+	    console.log("jumpUrl=6");
 	}
 	/*自动向下跳转 end*/
     var audioUrl = "";
@@ -318,9 +327,6 @@ function act() {
 	
 	//Main part
 	$("a.btn0").click(function () {
-	    console.log("btn0");
-	    console.log("Input: " + $("textarea.b").val().replace(/>/g, "&gt;").toLowerCase());
-	    console.log("Answer: " + $(".a .a").html().toLowerCase());
         //$(".f_slipt").hide();
 	    if ($("textarea.b").val().replace(/>/g, "&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
             console.log("Right")

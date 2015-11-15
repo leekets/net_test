@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
             <ul class="nav navbar-nav">
                 <!-- ko foreach: ko_array_url -->
-                <li> <a data-bind="text: ko_value, attr: { href: ko_href, class: ko_class, type: ko_type, target: ko_target }"></a> </li>
+                <li> <a data-bind="text: ko_value, attr: { href: ko_href, class: ko_class, type: ko_type, target: ko_target, accesskey: ko_accesskey }"></a> </li>
                 <!-- /ko -->
                 <li><a class="btnNext" accesskey="n" href="javascript:void(0);">Next</a></li>
                 <li><a class="f_link_normal" href="javescript:void(0);">Normal Mode</a></li>
@@ -30,11 +30,11 @@
     $(function () {
         ko.applyBindings({
             ko_array_url: [
-                { ko_value: 'Index', ko_href: baseurl + 'index', ko_class: '', ko_type: '', ko_target: '' },
-                { ko_value: 'Back Category', ko_href: '', ko_class: 'f_nav_jump', ko_type: '', ko_target: '' },
-                { ko_value: 'Paractice Mode', ko_href: baseurl + 'TestList?id=' + pid, ko_class: '', ko_type: '', ko_target: '' },
-                { ko_value: 'Normal Mode', ko_href: baseurl + 'TestArr?id=' + pid, ko_class: '', ko_type: '', ko_target: '' },
-                { ko_value: 'Next', ko_href: '', ko_class: 'btnNext', ko_type: '', ko_target: '' },
+                { ko_value: 'Index', ko_href: baseurl + 'index', ko_class: '', ko_type: '', ko_target: '', ko_accesskey: "" },
+                { ko_value: 'Back Category', ko_href: '', ko_class: 'f_nav_jump', ko_type: '', ko_target: '', ko_accesskey: "" },
+                { ko_value: '[P]aractice Mode', ko_href: baseurl + 'TestList?id=' + pid, ko_class: '', ko_type: '', ko_target: '', ko_accesskey: "p" },
+                { ko_value: 'Normal Mode', ko_href: baseurl + 'TestArr?id=' + pid, ko_class: '', ko_type: '', ko_target: '', ko_accesskey: "" },
+                { ko_value: 'Next', ko_href: '', ko_class: 'btnNext', ko_type: '', ko_target: '', ko_accesskey: "" }
             ]
         });
         $(".f_nav_jump").attr("href", "index.html?id=" + cateJSON[usual_search(cateJSON, pid)].parentId);

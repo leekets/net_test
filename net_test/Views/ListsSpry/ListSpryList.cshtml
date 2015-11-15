@@ -40,7 +40,7 @@
                             <td><input type="checkbox" name="arr" value="@item.ID" /></td>
                             <td>@Html.ActionLink(item.subject, "edit", new { id = item.ID })</td>
                             <td>@Html.ActionLink(item.subTitle, "edit", new { id = item.ID })</td>
-                            <td>@Html.ActionLink(item.hint, "edit", new { id = item.ID })</td>
+                            <td>@item.hint</td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                                 @Html.ActionLink("Delete", "Delete", new { id = item.ID })
@@ -64,16 +64,17 @@
                     <input type="submit" value="Move" class="btn btn-default" />
                 </div>
                     <ul class="list-inline">
-                        <li> <a href="http://localhost/git_test073/index.php/printpage/output?page=category" target="_blank" class="btn btn-warning">Print</a></li>
+                        <li> <a href="" target="_blank" class="btn btn-warning">Print</a></li>
                         <li>@Html.ActionLink("Test", "index", "Test", null, new { @class = "btn btn-info" })</li>
-                        <li><a href="http://localhost/git_test073/index.php/pro2/cate_sql/?id=<?php echo $pid ?>&act=list" target="_blank" class="btn btn-warning">Git Test</a></li>
-                        <li><a class="btn btn-danger" href="http://localhost/git_test073/index.php/pro/news_sql?id={ds1::ID}&act=delNewsByCate&cid=<?php echo $_GET['cid'] ?>&pid=<?php echo $_GET['pid'] ?>" onclick="return confirm('Delete?')">Delete All</a></li>
+                        <li><a class="btn btn-danger" href="" onclick="return confirm('Delete?')">Delete All</a></li>
                         <li>@Html.ActionLink("Create New", "Create", new { id = ViewBag.viewID }, new { @class = "btn btn-info" })</li>
+                        @* Todo: z: vertify id *@
                         <li>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                                 Batch Insert
                             </button>
                         </li>
+                        
                         <li>@Html.ActionLink("Back", "CategorySpryList", "CategoriesSpry", new { id = ViewBag.viewPID }, new { @class = "btn btn-default" })</li>
                     </ul>
             }
@@ -98,4 +99,5 @@
 </div>
 
 @Html.Partial("_modalBatchInsert")
+
 

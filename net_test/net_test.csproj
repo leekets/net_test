@@ -220,6 +220,9 @@
     <Content Include="Views\Test\_nav.cshtml" />
     <Content Include="Views\ListsSpry\_cateList2.cshtml" />
     <Content Include="Views\Test\_testHead.cshtml" />
+    <Content Include="Views\CategoriesSpry\_modalAutoTree.cshtml" />
+    <Content Include="Views\ListsSpry\ListSpryPrintCateNum.cshtml" />
+    <Content Include="Views\CategoriesSpry\_modelPrintCateNum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
